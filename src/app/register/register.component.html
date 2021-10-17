@@ -1,0 +1,73 @@
+<div class="container-fluid sticky-top m-0 p-0">
+    <header class="bg-black border-bottom border-grey m-0">
+        <h2 class="text-white text-center p-2">Contact Book</h2>
+    </header>
+</div>
+
+<div class="container min-height">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 p-2 border rounded-3 border-dark my-3">
+            <h3 class="ps-4 mb-4">Register Here..</h3>
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Full Name:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="text" name="pname" id="pname" formControlName="pname" placeholder="Your Name">
+                        <span *ngIf="(this.registerForm.get('pname')?.touched||this.registerForm.get('pname')?.dirty)&&this.registerForm.get('pname')?.errors" class="text-danger m-3">Invalid Name.</span>
+                    </div>
+                </div>
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Email:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="email" name="email" id="email" formControlName="email" placeholder="Email">
+                        <span *ngIf="(this.registerForm.get('email')?.touched||this.registerForm.get('email')?.dirty)&&this.registerForm.get('email')?.errors" class="text-danger m-3">Invalid Email.</span>
+                    </div>
+                </div>
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Phone Number:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="tel" name="phone" id="phone" formControlName="phone" maxlength="10" placeholder="Phone (10 digit)">
+                        <span *ngIf="(this.registerForm.get('phone')?.touched||this.registerForm.get('phone')?.dirty)&&this.registerForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span>
+                    </div>
+                </div>
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Date Of Birth:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="date" name="dob" id="dob" formControlName="dob" placeholder="DOB">
+                        <span *ngIf="(this.registerForm.get('dob')?.touched||this.registerForm.get('dob')?.dirty)&&this.registerForm.get('dob')?.errors" class="text-danger m-3">Invalid DOB.</span>
+                    </div>
+                </div>
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Username:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="text" name="uname" id="uname" formControlName="uname" placeholder="Username">
+                        <span *ngIf="(this.registerForm.get('uname')?.touched||this.registerForm.get('uname')?.dirty)&&this.registerForm.get('uname')?.errors" class="text-danger m-3">Invalid Username.</span>
+                    </div>
+                </div>
+                <div class="m-1 row">
+                    <div class="col-3"><label for="pname" class="my-1 p-2">Password:</label></div>
+                    <div class="col-9">
+                        <input class="form-control m-1" type="password" name="pwrd" id="pwrd" formControlName="pwrd" placeholder="Password">
+                        <span *ngIf="(this.registerForm.get('pwrd')?.touched||this.registerForm.get('pwrd')?.dirty)&&this.registerForm.get('pwrd')?.errors" class="text-danger m-3">Invalid Password.</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary m-1" type="submit">Register</button>
+                    <button class="btn btn-secondary m-1" type="reset">Reset</button>
+                </div>
+            </form>
+            <div class="text-center m-4"><button class="btn btn-secondary"><a routerLink="" class="a-decoration">Back to Login Page</a></button></div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row bg-black">
+        <footer class="text-center text-white py-3">
+            <h6>Contact Book</h6>
+            <h6>Created By: Ratheesh K</h6>
+        </footer>
+    </div>
+</div>

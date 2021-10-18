@@ -57,8 +57,16 @@ export class DashboardComponent implements OnInit {
 
   logout(){
     localStorage.removeItem("token")
+    localStorage.removeItem("currUser")
+    localStorage.removeItem("currUname")
+    localStorage.removeItem("uId")
     this.route.navigateByUrl("")
   }
+
+  myFunction() {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+ }
 
   updateCall(event:any){
     this.eId = event.target.parentElement.id    

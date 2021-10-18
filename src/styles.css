@@ -1,29 +1,77 @@
+:root {
+    --main-bg-color: #121212;
+    --header-color: #000;
+    --font-color-white: #fff;
+    --selection-boxborder-color: #666;
+    --div-color: #373737;
+  }
 body{
-    background-color: rgb(230, 232, 245);
+    background-color: var(--main-bg-color, #b3b6c4);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--font-color-white, #000);
 }
-#contactSearch{
-    background-color: rgb(230, 232, 245);
+.dark-mode{
+    background-color: #b3b6c4;
+    color: black;
 }
-#contactSearch:focus{
-    background-color: white;
+
+header{
+    background-color: var(--header-color, #020530);
+    color: var(--font-color-white, #fff);
+    text-align: center;
+    /* border-bottom: 1px solid var(--selection-boxborder-color, #909090); */
+}
+footer{
+    background-color: var(--header-color, #020530);
+    color: var(--font-color-white, #fff);
+    text-align: center;
+}
+.login-div{
+    background-color: var(--header-color, #b3b6c4);
+    border: 1px solid var(--selection-boxborder-color, #000);
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+}
+.login-input{
+    margin: 10px 20px 10px 13px;
+    padding: 5px 10px 5px 10px;
+}
+.login-input input, .login-input input:focus{
+    background-color: var(--header-color, #fff);
+    color: var(--font-color-white, #000);
+}
+.login-register-link{
+    border: 1px solid var(--selection-boxborder-color, #000);
+    border-radius: 10px;
+    margin: 10px 25px 10px 25px;
+    padding: 10px 10px 10px 10px;
+}
+.register-div{
+    background-color: var(--header-color, #b3b6c4);
+    border: 1px solid var(--selection-boxborder-color, #000);
+    border-radius: 10px;
+    /* text-align: center; */
+    margin: 10px;
+    padding: 5px 25px 5px 25px;
+}
+.register-input input, .register-input input:focus{
+    background-color: var(--header-color, #fff);
+    color: var(--font-color-white, #000);
 }
 .anker-button{
+    background-color:var(--main-bg-color, #b3b6c4);
+    color: var(--font-color-white, #000);
     width: 100%;
     height: 50px;
-    background-color: rgb(230, 232, 245);
     margin: 0%;
     padding: 0%;
     border: none;
 }
 .anker-button:hover{
-    background-color: rgb(255, 255, 255);
-    border: 1px solid grey;
-}
-.contact-row:hover{
-    background-color: rgb(255, 255, 255);
-    box-shadow: 10px 10px 20px 5px grey;
-    font-size: 120%;
-    cursor: pointer;    
+    background-color: var(--header-color, #7b7c7d);
+    border: 1px solid var(--selection-boxborder-color, #000);
 }
  /* min height for dashboard screen */
 .min-height{
@@ -32,30 +80,51 @@ body{
 .a-decoration{
     text-decoration: none;
     cursor: pointer;
-    color: black;
+    color: var(--font-color-white, #000);
 }
 .a-decoration:hover{
     text-decoration: none;
     cursor: pointer;
-    color: black;
+    color: var(--font-color-white, #fff);
 }
 .a-decoration-logout{
     text-decoration: none;
     cursor: pointer;
+    color: var(--font-color-white, #fff);
 }
 .a-decoration-logout:hover{
+    color: var(--font-color-white, #fff);
     border: 2px dashed grey;
+}
+.modal-design{
+    background-color: var(--header-color, #fff);
+    color: var(--font-color-white, #000);
+    border: 1px solid var(--selection-boxborder-color, #000);
+}
+.modal-body input, .modal-body input:focus{
+    background-color: var(--header-color, #fff);
+    color: var(--font-color-white, #000);
 }
 .contact-row{
     position: relative;
 }
-
+.contact-row:hover{
+    background-color: var(--header-color, #fff);
+    /* box-shadow: 10px 10px 20px 5px var(--div-color, #000); */
+    border: 1px solid var(--selection-boxborder-color, #000);
+    border-radius: 100px;
+    font-size: 120%;
+    cursor: pointer;    
+}
 .contact-row .tooltipcontent {
     visibility: hidden;
     width: 500px;
-    background-color: white;    
+    background-color: var(--header-color, #fff);   
+    color: var(--font-color-white, #000); 
+    border: 1px solid var(--selection-boxborder-color, #000);
     border-radius: 6px;
     padding: 10px;
+    
     
     /* Position the tooltip */
     position: absolute;
@@ -64,12 +133,26 @@ body{
     left: 40%;
     margin-left: -60px;
 }
-  
 .contact-row:hover .tooltipcontent {
     visibility: visible;
 }
 .inline-search{
     display: flex;
-    background-color: rgb(230, 232, 245);
-    
+    background-color: var(--main-bg-color, #b3b6c4);
+    color: var(--font-color-white, #000);
+}
+.inline-search-bar{
+    display: flex;
+    background-color: var(--main-bg-color, #b3b6c4);
+    color: var(--font-color-white, #000);
+    border: 1px solid var(--selection-boxborder-color, #000);
+}
+#contactSearch{
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--font-color-white, #000);
+    color: var(--font-color-white, #000);
+}
+#contactSearch:focus{
+    background-color: var(--header-color, #fff);
+    color: var(--font-color-white, #000);
 }

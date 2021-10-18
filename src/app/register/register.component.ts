@@ -19,10 +19,17 @@ export class RegisterComponent implements OnInit {
     pwrd:['',[Validators.required, Validators.pattern('[a-zA-Z0-9@]*')]]
   })
 
+  dLogin:Date = new Date()
+
   constructor(private route:Router, private ds:DataService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
+
+  myFunction() {
+    var element = document.body;
+    element.classList.toggle("light-mode");
+ }
 
   register(){
     var pname=this.registerForm.value.pname

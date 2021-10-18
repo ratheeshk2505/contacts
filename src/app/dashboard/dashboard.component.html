@@ -1,11 +1,23 @@
 <div class="container-fluid sticky-top p-0">
     <header class="">
-        <div class=" m-0 pe-5 text-end">
-            <span class="px-3" title="Login Time">{{dLogin | date:'mediumDate' | titlecase}}</span>
-            <a class="a-decoration-logout px-3" title="Logout" (click)="logout()"> LogOut</a>
+        <div class="logo-heading">
+            <i class="far fa-2x m-2 fa-address-book"></i><h2>Contact Book</h2>
         </div>
-        <div>
-            <h2 class="text-center mb-0 pb-2">Welcome {{user | titlecase}}</h2>
+        <div class="header-logout">
+            <div class="">
+                <div class="dropdown">
+                    <a class="dropdown-toggle a-decoration-logout" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Hi, {{user | titlecase}}</a>
+                    <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuLink">
+                      <!-- <li><a class="dropdown-item a-decoration-logout" >Profile</a></li>
+                      <li><a class="dropdown-item a-decoration-logout" >Change Password</a></li> -->
+                      <li><a class="dropdown-item a-decoration-logout" (click)="logout()" >Logout</a></li>
+                    </ul>
+                  </div>
+            </div>
+            <div class=""> 
+                <a class="a-decoration-logout px-auto" (click)="myFunction()"><i class="fas mx-4 fa-adjust" title="Dark/Light Mode"></i></a>
+                <span class="ps-3" title="Today's Date">{{dLogin | date:'mediumDate' | titlecase}}</span>
+            </div>
         </div>
     </header>
 </div>
@@ -14,8 +26,6 @@
     <div class="row mt-3 min-height">
         <!-- side bar -->
         <div class="col-2 border-end border-dark px-0">
-            <h4 class="ps-3">Contact Book</h4>
-            <hr class="mx-0 my-2" style="color: rgb(0, 0, 0);">
             <div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#NewContact" class="anker-button text-start ps-3"><a class="">New Contact</a></button>
             </div>
@@ -102,7 +112,7 @@
 
             <div class="px-3 w-100">
                 <div class="inline-search">
-                    <div class="ps-3 fs-4 text-start me-auto">{{msg}}</div>
+                    <div class="ps-3 mb-3 fs-4 text-start me-auto">{{msg}}</div>
                     <div class="text-end ms-auto">
                         <div class="inline-search-bar form-control m-0 p-0">
                             <input type="search" class="form-control border-0" name="contactSearch" id="contactSearch" onfocus="this.value=''" value="Search">
@@ -148,7 +158,6 @@
                                     </div>
                                 </div>
                             </span>
-
                         </tr>
                     </tbody>
                 </table>

@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
 
   myFunction() {
     var element = document.body;
-    element.classList.toggle("dark-mode");
+    element.classList.toggle("light-mode");
  }
 
   updateCall(event:any){

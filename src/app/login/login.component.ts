@@ -15,10 +15,17 @@ export class LoginComponent implements OnInit {
     pwrd:['', [Validators.required, Validators.pattern('[a-zA-Z0-9@]*')]]
   })
 
+  dLogin:Date = new Date()
+
   constructor(private route:Router, private ds:DataService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
+
+  myFunction() {
+    var element = document.body;
+    element.classList.toggle("light-mode");
+ }
 
   login(){
     var uname=this.loginForm.value.uname

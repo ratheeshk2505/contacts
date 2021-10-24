@@ -1,4 +1,5 @@
 // import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,14 +22,17 @@ export class DashboardComponent implements OnInit {
   favcount:any
   eId:any
 
-  fname:any
-  lname:any
+  fname=""
+  lname=""
   email:any
   phone:any
   dob:any
   label=false
-
-  // updateVariables = [fname, hname, ]
+  file:any
+  img:any
+  imgPath:any
+  url:any
+  def_url:any
   
 
   saveForm=this.fb.group({
@@ -37,14 +41,15 @@ export class DashboardComponent implements OnInit {
     email:['',[Validators.required, Validators.pattern('[a-z0-9@_.]*')]],
     phone:['',[Validators.required, Validators.pattern('[0-9]*')]],
     dob:['',[Validators.pattern('[0-9_-]*')]],
-    // imgPath:['',[Validators.required, Validators.pattern('[a-zA-Z0-9@]*')]],
     label:[false]
   })
+  
 
-  constructor(private route:Router, private ds:DataService, private fb:FormBuilder) {
+  constructor(private route:Router, private ds:DataService, private fb:FormBuilder, private http:HttpClient) {
     this.user = localStorage.getItem('currUser')
     this.favCount()
     this.populate()
+    this.defaultContactImage()
     
    }
 
@@ -63,10 +68,22 @@ export class DashboardComponent implements OnInit {
     this.route.navigateByUrl("")
   }
 
-  myFunction() {
+  toggleTheme() {
     var element = document.body;
     element.classList.toggle("light-mode");
+    var abc = this.fname.toLowerCase()
+    console.log(abc);
  }
+
+  defaultContactImage(){
+    let call = true;
+    this.ds.defaultContactImage(call)
+    .subscribe((result:any)=>{
+      this.url = result.imgurl
+      this.imgPath = result.imgurl
+      this.def_url = result.imgurl
+    })
+  }
 
   updateCall(event:any){
     this.eId = event.target.parentElement.id    
@@ -79,11 +96,41 @@ export class DashboardComponent implements OnInit {
             this.phone = result.contacts.phone
             this.dob = result.contacts.dob
             this.label = result.contacts.label
+            this.url = result.contacts.img
           }
         }, (result:any)=>{
             alert(result.error.message)
           }
         )
+  }
+
+  updateContact(){
+    var eId = this.eId
+    var uId = localStorage.getItem("uId")
+    var name1=this.fname.toLowerCase()
+    var name2=this.lname.toLowerCase()
+    var fname=name1
+    var lname=name2
+    var email=this.email
+    var phone=this.phone
+    var dob=this.dob
+    var label=this.label
+    var img=this.url  
+    console.log(fname);
+    console.log(lname);
+      
+      this.ds.updateContact(uId, eId, fname, lname, email, phone, dob, img, label)
+      .subscribe((result:any)=>{
+        if (result){
+          alert(result.message)
+          this.populate()
+          this.favCount()
+          this.imgPath=this.def_url
+          this.url=this.def_url
+        }
+      }, (result:any)=>{
+        alert(result.error.message)
+      }) 
   }
 
   deleteContact(){
@@ -95,33 +142,9 @@ export class DashboardComponent implements OnInit {
         this.populate()
         this.favCount()
       }
-      
     }, (result:any)=>{
       alert(result.error.message)
     })
-  }
-
-  updateContact(){
-    var eId = this.eId
-    var uId = localStorage.getItem("uId")
-    var fname=this.fname
-    var lname=this.lname
-    var email=this.email
-    var phone=this.phone
-    var dob=this.dob
-    var label=this.label
-        
-       // uname, uId, fname, lname, email, phone, dob, imgPath, label
-      this.ds.updateContact(uId, eId, fname, lname, email, phone, dob, label)
-      .subscribe((result:any)=>{
-        if (result){
-          alert(result.message)
-          this.populate()
-          this.favCount()
-        }
-      }, (result:any)=>{
-        alert(result.error.message)
-      }) 
   }
   
 
@@ -166,26 +189,54 @@ export class DashboardComponent implements OnInit {
     },((result:any)=>{
       this.msg=result.error.message
     }))
+  }
 
+  onChangeImg(event:any){
+    if(event.target.files){
+      this.file=event.target.files[0]
+      var reader = new FileReader()      
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload=(event:any)=>{
+        this.url=event.target.result
+      }
+    }
+    this.uploadImg()
+  }
+  
+  uploadImg(){ 
+    const files = this.file
+    const formData = new FormData()
+    formData.append('img', files, files.name)    
+    this.http.post('http://localhost:3000/upload', formData)
+      .subscribe((result:any) => {
+        this.url = result.imgurl
+      },
+       (result)=>{
+        alert(result.error.message)
+      });
   }
 
   saveContact(){
     var uname = localStorage.getItem("currUname")
     var uId = localStorage.getItem("uId")
-    var fname=this.saveForm.value.fname
-    var lname=this.saveForm.value.lname
+    var name3=this.saveForm.value.fname.toLowerCase()
+    var name4=this.saveForm.value.lname.toLowerCase()
+    var fname=name3
+    var lname=name4
     var email=this.saveForm.value.email
     var phone=this.saveForm.value.phone
     var dob=this.saveForm.value.dob
     var label=this.saveForm.value.label 
-    
+    var img=this.imgPath
+    console.log(fname);
+    console.log(lname);
     if(this.saveForm.valid){
-       // uname, uId, fname, lname, email, phone, dob, imgPath, label
-      this.ds.saveContact(uname, uId, fname, lname, email, phone, dob, label)
+      this.ds.saveContact(uname, uId, fname, lname, email, phone, dob, img, label)
       .subscribe((result:any)=>{
         if (result){
           alert(result.message)
           this.saveForm.reset()
+          this.defaultContactImage()
           this.populate()
           this.favCount()
         }

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  myFunction() {
+  toggleTheme() {
     var element = document.body;
     element.classList.toggle("light-mode");
  }

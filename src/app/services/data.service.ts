@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from "../../environments/environment";
+import {Observable} from 'rxjs';
 
 
 const options={
@@ -40,9 +41,14 @@ export class DataService {
     return this.http.post(environment.apiURL+'/register', data)
   }
 
-  saveContact(uname:any, uId:any, fname:any, lname:any, email:any, phone:any, dob:any, label:any){
+  defaultContactImage(call:any){
+    const data = {call}
+    return this.http.post(environment.apiURL+'/contactimg', data, this.getOptions())
+  }
+
+  saveContact(uname:any, uId:any, fname:any, lname:any, email:any, phone:any, dob:any, img:any, label:any){
     const data = {
-      uname, uId, fname, lname, email, phone, dob, label
+      uname, uId, fname, lname, email, phone, dob, img, label
     }
     return this.http.post(environment.apiURL+'/save', data, this.getOptions())
   }
@@ -68,9 +74,9 @@ export class DataService {
     return this.http.post(environment.apiURL+'/update', data, this.getOptions())
   }
 
-  updateContact(uId:any, eId:any,fname:any, lname:any, email:any, phone:any, dob:any, label:any){
+  updateContact(uId:any, eId:any,fname:any, lname:any, email:any, phone:any, dob:any, img:any, label:any){
     const data={
-      uId, eId, fname, lname, email, phone, dob, label
+      uId, eId, fname, lname, email, phone, dob, img, label
     }
     return this.http.post(environment.apiURL+'/updatecontact', data, this.getOptions())
   }
@@ -81,6 +87,8 @@ export class DataService {
     }
     return this.http.post(environment.apiURL+'/delete', data, this.getOptions())
   }
+
+ 
 
   // end bracket
 }

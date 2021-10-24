@@ -8,15 +8,15 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle a-decoration-logout" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Hi, {{user | titlecase}}</a>
                     <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuLink">
-                      <!-- <li><a class="dropdown-item a-decoration-logout" >Profile</a></li>
-                      <li><a class="dropdown-item a-decoration-logout" >Change Password</a></li> -->
-                      <li><a class="dropdown-item a-decoration-logout" (click)="logout()" >Logout</a></li>
+                      <li class=""><a class="dropdown-item a-decoration-logout" >Profile</a></li>
+                      <li class=""><a class="dropdown-item a-decoration-logout" >Change Password</a></li>
+                      <li class=""><a class="dropdown-item a-decoration-logout" (click)="logout()" >Logout</a></li>
                     </ul>
                   </div>
             </div>
             <div class=""> 
-                <a class="a-decoration-logout px-auto" (click)="myFunction()"><i class="fas mx-4 fa-adjust" title="Dark/Light Mode"></i></a>
-                <span class="ps-3" title="Today's Date">{{dLogin | date:'mediumDate' | titlecase}}</span>
+                <a class="a-decoration-logout px-auto" (click)="toggleTheme()"><i class="fas mx-2 fa-adjust" title="Dark/Light Mode"></i></a>
+                <span class="ps-3 a-decoration-logout" title="Today's Date">{{dLogin | date:'mediumDate' | titlecase}}</span>
             </div>
         </div>
     </header>
@@ -36,7 +36,7 @@
                 <button (click)="populate()" class="anker-button text-start ps-3"><a class="">All Contacts <span class="badge a-decoration">({{allcount}})</span></a></button>
             </div>
             <!-- <div>
-                <button (click)="myFunction()" class="anker-button text-start ps-3"><a class="">Deleted Contacts</a></button>
+                <button (click)="uploadImg()" class="anker-button text-start ps-3"><a class="">Deleted Contacts</a></button>
             </div> -->
 
         </div>
@@ -51,48 +51,49 @@
                         <h5 class="modal-title" id="NewContactLabel">Add Contact</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form [formGroup]="saveForm" (ngSubmit)="saveContact()" class="">
+                        <form [formGroup]="saveForm" (ngSubmit)="saveContact()" class="" enctype="multipart/form-data" method="post">
                         <div class="modal-body">
+                            <div class="m-1 text-center">
+                                <img [src]="url" alt="Contact Image" width="200px" height="150px">
+                                <input type="file" name="img" id="img" (change)="onChangeImg($event)">
+                                <!-- <input class="form-control m-1" type="text" name="imgPath" id="imgPath" formControlName="imgPath" placeholder="ImagePath"> -->
+                                <!-- <span *ngIf="(this.saveForm.get('phone')?.touched||this.saveForm.get('phone')?.dirty)&&this.saveForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span> -->
+                            </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="fname" class="py-2">First Name:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="fname" class="py-2">First Name:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="fname" id="fname" formControlName="fname" placeholder="First Name">
                                     <span *ngIf="(this.saveForm.get('fname')?.touched||this.saveForm.get('fname')?.dirty)&&this.saveForm.get('fname')?.errors" class="text-danger m-3">Invalid Name.</span>
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="lname" class="py-2">Last Name:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="lname" class="py-2">Last Name:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="lname" id="lname" formControlName="lname" placeholder="Last Name">
                                     <span *ngIf="(this.saveForm.get('lname')?.touched||this.saveForm.get('lname')?.dirty)&&this.saveForm.get('lname')?.errors" class="text-danger m-3">Invalid Name.</span>
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="email" class="py-2">Email:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="email" class="py-2">Email:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="email" id="email" formControlName="email" placeholder="Email">
                                     <span *ngIf="(this.saveForm.get('email')?.touched||this.saveForm.get('email')?.dirty)&&this.saveForm.get('email')?.errors" class="text-danger m-3">Invalid Email.</span>
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="phone" class="py-2">Phone:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="phone" class="py-2">Phone:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="tel" name="phone" id="phone" formControlName="phone" maxlength="10" placeholder="Phone (10 digit)">
                                     <span *ngIf="(this.saveForm.get('phone')?.touched||this.saveForm.get('phone')?.dirty)&&this.saveForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span>
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="dob" class="py-2">DOB:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="dob" class="py-2">DOB:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="date" name="dob" id="dob" formControlName="dob" placeholder="DOB">
                                     <span *ngIf="(this.saveForm.get('dob')?.touched||this.saveForm.get('dob')?.dirty)&&this.saveForm.get('dob')?.errors" class="text-danger m-3">Invalid DOB.</span>
                                 </div>
                             </div>
-                            
-                            <!-- <div class="m-1">
-                                <input class="form-control m-1" type="text" name="imgPath" id="imgPath" formControlName="imgPath" placeholder="ImagePath">
-                                <span *ngIf="(this.saveForm.get('phone')?.touched||this.saveForm.get('phone')?.dirty)&&this.saveForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span>
-                            </div> -->
                             <div class="m-1 text-center">
                                 <input class=" m-1 p-1" type="checkbox" name="label" id="label" formControlName="label">
                                 <label for="label" class=""> Add to Favorite</label>
@@ -113,12 +114,12 @@
             <div class="px-3 w-100">
                 <div class="inline-search">
                     <div class="ps-3 mb-3 fs-4 text-start me-auto">{{msg}}</div>
-                    <div class="text-end ms-auto">
+                    <!-- <div class="text-end ms-auto">
                         <div class="inline-search-bar form-control m-0 p-0">
                             <input type="search" class="form-control border-0" name="contactSearch" id="contactSearch" onfocus="this.value=''" value="Search">
-                            <a><i class="fas py-2 mx-1 fa-search"></i></a>
+                            <a><i class="fas py-2 mx-2 fa-search"></i></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <table class="fs-5 w-100" >
                     <thead class="" *ngIf="contacts">
@@ -154,7 +155,7 @@
                                         <h5><span class="ps-2">{{contact.dob | date:'mediumDate' | titlecase}}</span></h5>
                                     </div>
                                     <div class="col-3 mt-2 text-center p-2">
-                                        <img src="../../assets/images/suju 1.jpg" width="100px" height="100px" class="m-0 p-0 rounded-3" alt="thumbnail">
+                                        <img src='{{contact.img}}' width="100px" height="100px" class="m-0 p-0 rounded-3" alt="thumbnail">
                                     </div>
                                 </div>
                             </span>
@@ -173,47 +174,46 @@
                         </div>
                         <form (ngSubmit)="updateContact()" class="">
                         <div class="modal-body">
+                            <div class="m-1 text-center">
+                                <img [src]="url" alt="Contact Image" width="200px" height="150px">
+                                <input type="file" name="img" id="img" [(ngModel)]="img" (change)="onChangeImg($event)">
+                                <!-- <input class="form-control m-1" type="text" name="imgPath" id="imgPath" formControlName="imgPath" placeholder="ImagePath"> -->
+                                <!-- <span *ngIf="(this.saveForm.get('phone')?.touched||this.saveForm.get('phone')?.dirty)&&this.saveForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span> -->
+                            </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="fname" class="py-2">First Name:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="fname" class="py-2">First Name:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="fname" id="fname" [(ngModel)]="fname" placeholder="First Name">
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="lname" class="py-2">Last Name:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="lname" class="py-2">Last Name:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="lname" id="lname" [(ngModel)]="lname" placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="email" class="py-2">Email:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="email" class="py-2">Email:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="text" name="email" id="email" [(ngModel)]="email" placeholder="Email">
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="phone" class="py-2">Phone:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="phone" class="py-2">Phone:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="tel" name="phone" id="phone" [(ngModel)]="phone" maxlength="10" placeholder="Phone (10 digit)">
                                 </div>
                             </div>
                             <div class="row m-1">
-                                <div class="col-3"><label for="dob" class="py-2">DOB:</label></div>
-                                <div class="col-9">
+                                <div class="col-4"><label for="dob" class="py-2">DOB:</label></div>
+                                <div class="col-8">
                                     <input class="form-control m-1" type="date" name="dob" id="dob" [(ngModel)]="dob" placeholder="DOB">
                                 </div>
                             </div>
-                            
-                            <!-- <div class="m-1">
-                                <input class="form-control m-1" type="text" name="imgPath" id="imgPath" [(ngModel)]="imgPath" placeholder="ImagePath">
-                                <span *ngIf="(this.saveForm.get('phone')?.touched||this.saveForm.get('phone')?.dirty)&&this.saveForm.get('phone')?.errors" class="text-danger m-3">Invalid Phone Number.</span>
-                            </div> -->
                             <div class="m-1 text-center">
                                 <input class=" m-1 p-1" type="checkbox" name="label" id="label" [(ngModel)]="label">
                                 <label for="label" class=""> Add to Favorite</label>
                             </div>
-
-                        
                         </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteContact()">Delete Contact</button>
@@ -226,6 +226,9 @@
 
         </div>
     </div>
+</div>
+
+<div class="text-center">
 </div>
 
 <div class="container-fluid">

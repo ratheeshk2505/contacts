@@ -38,12 +38,22 @@ header{
     flex-direction: column;
     align-items: flex-end;
     margin-right: 50px;
+    /* border: 1px solid white; */
 }
-.drop, .drop ul, .drop li{
+.drop li, .drop, .drop ul{
     background-color: var(--main-bg-color);
     color: var(--font-color);
-    margin: 0px;
-    padding: 0px;
+    margin: 0px 50px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+}
+.drop a:hover{
+    background-color: var(--select-bg-color);
+    color: var(--font-color);
+    margin: 0px 60px 0px 0px;
+    padding: 0px 0px 0px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
 }
 footer{
     background-color: var(--main-bg-color);
@@ -120,12 +130,13 @@ footer{
     cursor: pointer;
     color: var(--font-color);
     padding: 2px 5px 2px 5px;
+    /* margin-right: 50px; */
 }
 .a-decoration-logout:hover{
     color: var(--font-color);
-    background-color: var(--select-bg-color);
-    border: 1px dashed var(--border-color);
-    border-radius: 10px;
+    /* background-color: var(--select-bg-color);
+    border: 1px dashed var(--border-color); */
+    /* border-radius: 10px; */
 }
 .modal-design{
     background-color: var(--main-bg-color);

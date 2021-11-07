@@ -71,8 +71,6 @@ export class DashboardComponent implements OnInit {
   toggleTheme() {
     var element = document.body;
     element.classList.toggle("light-mode");
-    var abc = this.fname.toLowerCase()
-    console.log(abc);
  }
 
   defaultContactImage(){
@@ -86,6 +84,9 @@ export class DashboardComponent implements OnInit {
   }
 
   updateCall(event:any){
+    if(this.allcount<=1){
+      this.tempcontacts=""
+    }
     this.eId = event.target.parentElement.id    
     this.ds.updateCall(this.uId,this.eId)
         .subscribe((result:any)=>{
@@ -107,17 +108,14 @@ export class DashboardComponent implements OnInit {
   updateContact(){
     var eId = this.eId
     var uId = localStorage.getItem("uId")
-    var name1=this.fname.toLowerCase()
-    var name2=this.lname.toLowerCase()
-    var fname=name1
-    var lname=name2
+    var fname=this.fname.toLowerCase()
+    var lname=this.lname.toLowerCase()
     var email=this.email
     var phone=this.phone
     var dob=this.dob
     var label=this.label
     var img=this.url  
-    console.log(fname);
-    console.log(lname);
+    
       
       this.ds.updateContact(uId, eId, fname, lname, email, phone, dob, img, label)
       .subscribe((result:any)=>{
@@ -134,30 +132,33 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteContact(){
-    alert("Are You Sure Want To Delete?")
-    this.ds.deleteContact(this.uId, this.eId)
-    .subscribe((result:any)=>{
-      if(result){
-        alert(result.message)
-        this.populate()
-        this.favCount()
-      }
-    }, (result:any)=>{
-      alert(result.error.message)
-    })
+    if(confirm("Are You Sure Want To Delete..?")){
+      this.contacts=this.tempcontacts
+      this.ds.deleteContact(this.uId, this.eId)
+      .subscribe((result:any)=>{
+        if(result){
+          alert(result.message)
+          this.populate();
+          this.favCount();
+        }
+      }, (result:any)=>{
+        alert(result.error.message)
+      })
+    }
   }
   
 
   populate(){
     this.ds.showContacts(this.uId)
     .subscribe((result:any)=>{
-      this.contacts = result.contacts
-      this.allcount = result.contacts.length
       if(result.contacts.length==0){
+        this.allcount = result.contacts.length
         this.msg=result.messageNo
         this.contacts=""
       }
       else{
+        this.contacts = result.contacts
+        this.allcount = result.contacts.length
         this.msg=result.messageYes
       }      
     },((result:any)=>{
@@ -207,9 +208,13 @@ export class DashboardComponent implements OnInit {
     const files = this.file
     const formData = new FormData()
     formData.append('img', files, files.name)    
-    this.http.post('http://localhost:3000/upload', formData)
+    this.http.post('http://localhost:8080/upload', formData)
       .subscribe((result:any) => {
-        this.url = result.imgurl
+        this.imgPath = result.imgurl
+        // console.log('upload success');
+        // console.log(result.imgurl);
+        
+        
       },
        (result)=>{
         alert(result.error.message)
@@ -219,17 +224,15 @@ export class DashboardComponent implements OnInit {
   saveContact(){
     var uname = localStorage.getItem("currUname")
     var uId = localStorage.getItem("uId")
-    var name3=this.saveForm.value.fname.toLowerCase()
-    var name4=this.saveForm.value.lname.toLowerCase()
-    var fname=name3
-    var lname=name4
+    var fname=this.saveForm.value.fname.toLowerCase()
+    var lname=this.saveForm.value.lname.toLowerCase()
     var email=this.saveForm.value.email
     var phone=this.saveForm.value.phone
     var dob=this.saveForm.value.dob
     var label=this.saveForm.value.label 
     var img=this.imgPath
-    console.log(fname);
-    console.log(lname);
+    console.log(img);
+    
     if(this.saveForm.valid){
       this.ds.saveContact(uname, uId, fname, lname, email, phone, dob, img, label)
       .subscribe((result:any)=>{

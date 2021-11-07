@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
     email:['',[Validators.required, Validators.pattern('[a-z0-9@_.]*')]],
     phone:['',[Validators.required, Validators.pattern('[0-9]*')]],
     dob:['',[Validators.required, Validators.pattern('[0-9_-]*')]],
-    uname:['',[Validators.required, Validators.pattern('[a-zA-Z]*')]],
+    uname:['',[Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
     pwrd:['',[Validators.required, Validators.pattern('[a-zA-Z0-9@]*')]]
   })
 

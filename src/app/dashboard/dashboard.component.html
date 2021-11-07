@@ -16,7 +16,7 @@
             </div>
             <div class=""> 
                 <a class="a-decoration-logout px-auto" (click)="toggleTheme()"><i class="fas mx-2 fa-adjust" title="Dark/Light Mode"></i></a>
-                <span class="ps-3 a-decoration-logout" title="Today's Date">{{dLogin | date:'mediumDate' | titlecase}}</span>
+                <span class="ps-3 " title="Today's Date">{{dLogin | date:'mediumDate' | titlecase}}</span>
             </div>
         </div>
     </header>
@@ -49,7 +49,7 @@
                     <div class="modal-content modal-design">
                         <div class="modal-header">
                         <h5 class="modal-title" id="NewContactLabel">Add Contact</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
                         </div>
                         <form [formGroup]="saveForm" (ngSubmit)="saveContact()" class="" enctype="multipart/form-data" method="post">
                         <div class="modal-body">
@@ -121,8 +121,8 @@
                         </div>
                     </div> -->
                 </div>
-                <table class="fs-5 w-100" >
-                    <thead class="" *ngIf="contacts">
+                <table class="fs-5 w-100" *ngIf="contacts" >
+                    <thead class="" >
                         <tr class="ps-3">
                             <th style="width: 5%;"></th>
                             <th style="width: 30%;">Name</th>
@@ -170,7 +170,7 @@
                     <div class="modal-content modal-design">
                         <div class="modal-header">
                         <h5 class="modal-title" id="UpdateContactLabel">Update Contact Details..</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
                         </div>
                         <form (ngSubmit)="updateContact()" class="">
                         <div class="modal-body">
